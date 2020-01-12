@@ -37,7 +37,7 @@ def owner_send_message(message):
 				bot.reply_to(message, 'Wrong \u0060ID\u0060 detected, *aborting*. Only \u0060INT\u0060 values is allowed for \u0060ID\u0060', parse_mode='markdown')
 			else:
 				message_text = parsed_command[2]
-				notif_text_localize = '\u0060[ {0} ]\u0060'.format('ВЫ ПОЛУЧИЛИ НОВОЕ СООБЩЕНИЕ' if rhelpers.get_user_language(message) == 'ru' else 'YOU HAVE RECEIVED A NEW MESSAGE')
+				notif_text_localize = '*[ {0} ]*'.format('ВЫ ПОЛУЧИЛИ НОВОЕ СООБЩЕНИЕ' if rhelpers.get_user_language(message) == 'ru' else 'YOU HAVE RECEIVED A NEW MESSAGE')
 				bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
 				bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
 				print('[BOT] Message from OWNER to < {0} > was successfully sent.'.format(recipient_id))
