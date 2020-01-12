@@ -9,6 +9,7 @@ user_id_owner = os.getenv("ID_OWNER")
 
 @bot.message_handler(commands=['start'])
 def starter_help_message(message):
+	print('[BOT] Detected /start for user < {0} >.'.format(message.from_user.id))
 	if rhelpers.get_user_language(message) == 'ru':
 		start_message = bot.send_message(message.from_user.id, '*Привет* 👋\n\nДанный бот пересылает все отправленые ему сообщения сам знаешь кому. \
 Бот так-же может выполнять функцию обратной связи, так что ответы на все свои вопросы ты скорее всего получишь через него.\n\nНу вот, собственно, и все. \
@@ -39,6 +40,7 @@ def owner_send_message(message):
 				notif_text_localize = '\u0060[ {0} ]\u0060'.format('ВЫ ПОЛУЧИЛИ НОВОЕ СООБЩЕНИЕ' if rhelpers.get_user_language(message) == 'ru' else 'YOU HAVE RECEIVED A NEW MESSAGE')
 				bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
 				bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
+				print('[BOT] Message from OWNER to < {0} > was successfully sent.'.format(recipient_id))
 
 @bot.message_handler(content_types=['text'])
 def message_resender(message):
@@ -49,6 +51,7 @@ def message_resender(message):
 		bot.reply_to(message, '*Ваше сообщение было успешно перенаправлено получателю*',parse_mode='markdown')
 	else:
 		bot.reply_to(message, '*Your message was successfully forwarded to recipient*', parse_mode='markdown')
+	print('[BOT] Message from < {0} > to OWNER was successfully sent.'.format(message.from_user.id))
 
 print("[BOT] Initialized. Starting polling.")
 bot.polling()
