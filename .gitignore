@@ -1,2 +1,5 @@
 # Ignore final .env file
 .env
+
+# Ignore python cache
+__pycache__
