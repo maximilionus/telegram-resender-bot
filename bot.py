@@ -30,10 +30,15 @@ def owner_send_message(message):
 		parsed_command = message.text.split(' : ')
 		if len(parsed_command) == 3:
 			recipient_id = parsed_command[1]
-			message_text = parsed_command[2]
-			notif_text_localize = '\u0060[ {0} ]\u0060'.format('ВЫ ПОЛУЧИЛИ НОВОЕ СООБЩЕНИЕ' if rhelpers.get_user_language(message) == 'ru' else 'YOU HAVE RECEIVED A NEW MESSAGE')
-			bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
-			bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
+			try:
+				int(recipient_id)
+			except ValueError:
+				bot.reply_to(message, 'Wrong \u0060ID\u0060 detected, *aborting*. Only \u0060INT\u0060 values is allowed for \u0060ID\u0060', parse_mode='markdown')
+			else:
+				message_text = parsed_command[2]
+				notif_text_localize = '\u0060[ {0} ]\u0060'.format('ВЫ ПОЛУЧИЛИ НОВОЕ СООБЩЕНИЕ' if rhelpers.get_user_language(message) == 'ru' else 'YOU HAVE RECEIVED A NEW MESSAGE')
+				bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
+				bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
 
 @bot.message_handler(content_types=['text'])
 def message_resender(message):
