@@ -23,7 +23,7 @@ it, actually. You can write a message right now and send it without any addition
 but still can sometimes go on maintenance if I suddenly decide to (update / restart / etc) it. Your message will be delivered anyway \
 after it\u0027s launched and you will receive a delivery confirmation. So there\u0027s no need send the same message every 5 minutes :)', parse_mode='markdown')
 	if rhelpers.check_is_owner(message):
-			bot.edit_message_text(start_message.text + '\n\n*OWNER COMMANDS SYNTAX*\n🔴 \u0060/send : recipient_id : message_text\u0060', message.from_user.id, start_message.message_id, parse_mode='markdown')
+			bot.edit_message_text(start_message.text + '\n\n*OWNER COMMANDS SYNTAX*\n🔴 \u0060/send : recipient_id : message_text\u0060\n🔴 \u0060$debugmode$\u0060 - add in the beginning of message to get message json', message.from_user.id, start_message.message_id, parse_mode='markdown')
 
 @bot.message_handler(commands=['send'])
 def owner_send_message(message):
@@ -42,16 +42,22 @@ def owner_send_message(message):
 				bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
 				print('[BOT] Message from OWNER to < {0} > was successfully sent.'.format(recipient_id))
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text','sticker'])
 def message_resender(message):
-	bot.send_message(user_id_owner, '\u0060[ RECEIVED MESSAGE ]\u0060\n\n*From :* {0} {1}\n*Username :* @{2}\n*LNG :* {3}\n*ID :* {4}'
-		.format(message.from_user.first_name, message.from_user.last_name, message.from_user.username, rhelpers.get_user_language(message), message.from_user.id), parse_mode="markdown")
-	bot.forward_message(user_id_owner, message.from_user.id, message.message_id)
-	if rhelpers.get_user_language(message) == 'ru':
-		bot.reply_to(message, '*Ваше сообщение было успешно перенаправлено получателю*',parse_mode='markdown')
-	else:
-		bot.reply_to(message, '*Your message was successfully forwarded to recipient*', parse_mode='markdown')
-	print('[BOT] Message from < {0} > to OWNER was successfully sent.'.format(message.from_user.id))
+	if type(message.text) == str: 
+		if message.text.startswith('$debugmode$'):
+			if rhelpers.check_is_owner(message):
+				bot.send_message(message.from_user.id, message)
+				print('[BOT] OWNER used $debugmode$')
+	else: 
+		bot.send_message(user_id_owner, '\u0060[ RECEIVED MESSAGE ]\u0060\n\n*From :* {0} {1}\n*Username :* @{2}\n*LNG :* {3}\n*ID :* {4}'
+			.format(message.from_user.first_name, message.from_user.last_name, message.from_user.username, rhelpers.get_user_language(message), message.from_user.id), parse_mode="markdown")
+		bot.forward_message(user_id_owner, message.from_user.id, message.message_id)
+		if rhelpers.get_user_language(message) == 'ru':
+			bot.reply_to(message, '*Ваше сообщение было успешно перенаправлено получателю*',parse_mode='markdown')
+		else:
+			bot.reply_to(message, '*Your message was successfully forwarded to recipient*', parse_mode='markdown')
+		print('[BOT] Message from < {0} > to OWNER was successfully sent.'.format(message.from_user.id))
 
 print("[BOT] Initialized. Starting polling.")
 bot.polling()
