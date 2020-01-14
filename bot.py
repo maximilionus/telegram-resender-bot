@@ -37,15 +37,15 @@ def owner_send_message(message):
 				bot.reply_to(message, 'Wrong \u0060ID\u0060 detected, *aborting*. Only \u0060INT\u0060 values is allowed for \u0060ID\u0060', parse_mode='markdown')
 			else:
 				message_text = parsed_command[2]
-				notif_text_localize = '*[ {0} ]*'.format('ВЫ ПОЛУЧИЛИ НОВОЕ СООБЩЕНИЕ' if rhelpers.get_user_language(message) == 'ru' else 'YOU HAVE RECEIVED A NEW MESSAGE')
+				notif_text_localize = '*[ YOU HAVE RECEIVED A NEW MESSAGE ]*'
 				bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
 				bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
 				print('[BOT] Message from OWNER to < {0} > was successfully sent.'.format(recipient_id))
 
 @bot.message_handler(content_types=['text'])
 def message_resender(message):
-	bot.send_message(user_id_owner, '\u0060[ RECEIVED MESSAGE ]\u0060\n\n*From :* {0} {1}\n*Username :* @{2}\n*ID : * {3}'
-		.format(message.from_user.first_name, message.from_user.last_name, message.from_user.username, message.from_user.id), parse_mode="markdown")
+	bot.send_message(user_id_owner, '\u0060[ RECEIVED MESSAGE ]\u0060\n\n*From :* {0} {1}\n*Username :* @{2}\n*LNG :* {3}\n*ID :* {4}'
+		.format(message.from_user.first_name, message.from_user.last_name, message.from_user.username, rhelpers.get_user_language(message), message.from_user.id), parse_mode="markdown")
 	bot.forward_message(user_id_owner, message.from_user.id, message.message_id)
 	if rhelpers.get_user_language(message) == 'ru':
 		bot.reply_to(message, '*Ваше сообщение было успешно перенаправлено получателю*',parse_mode='markdown')
