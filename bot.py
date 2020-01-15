@@ -41,9 +41,14 @@ def owner_send_message(message):
 			else:
 				message_text = parsed_command[2]
 				notif_text_localize = '*[ YOU HAVE RECEIVED A NEW MESSAGE ]*'
-				bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
-				bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
-				print('[BOT] Message from OWNER to < {0} > was successfully sent.'.format(recipient_id))
+				try:
+					bot.send_message(recipient_id, notif_text_localize + '\n\n' + message_text, parse_mode='markdown')
+					bot.reply_to(message, '*MESSAGE WAS SUCCESSFULLY SENT*', parse_mode='markdown')
+					print('[BOT] Message from OWNER to < {0} > was successfully sent.'.format(recipient_id))
+				except Exception as e:
+					bot.reply_to(message, '*!!! MESSAGE WAS NOT SENT !!!*', parse_mode='markdown')
+					bot.reply_to(message, str(e))
+					print('[BOT] Message from OWNER to < {0} > not sent due to exception occured.'.format(recipient_id))
 
 @bot.message_handler(content_types=['text','sticker'])
 def message_resender(message):
