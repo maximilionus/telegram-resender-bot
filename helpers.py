@@ -15,7 +15,7 @@ def check_is_owner(message):
 		return bool(0)
 
 def get_debug_status():
-	if bool(os.getenv('BOT_DEBUG_STATUS')) == 1:
+	if os.getenv('BOT_DEBUG_STATUS') == '1':
 		return bool(1)
-	else:
+	elif os.getenv('BOT_DEBUG_STATUS') == '0':
 		return bool(0)
