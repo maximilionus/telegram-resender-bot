@@ -50,7 +50,7 @@ def owner_send_message(message):
 					bot.reply_to(message, str(e))
 					print('[BOT] Message from OWNER to < {0} > not sent due to exception occured.'.format(recipient_id))
 
-@bot.message_handler(content_types=['text','sticker'])
+@bot.message_handler(content_types=['audio','video','photo','document','text','location','contact','sticker'])
 def message_resender(message):
 	if type(message.text) == str and message.text.startswith('$debugmode$'):
 		if rhelpers.check_is_owner(message):
