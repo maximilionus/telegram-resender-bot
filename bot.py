@@ -26,7 +26,7 @@ after it\u0027s launched and you will receive a delivery confirmation. So there\
 		str_localize = '\u0060< БОТ НА ОБСЛУЖИВАНИИ >\u0060' if rhelpers.get_user_language(message) == 'ru' else '\u0060< BOT IS UNDER MAINTENANCE >\u0060'
 		start_message = bot.edit_message_text('{}\n\n'.format(str_localize) + start_message.text, message.from_user.id, start_message.message_id, parse_mode='markdown')
 	if rhelpers.check_is_owner(message):
-		bot.edit_message_text(start_message.text + '\n\n*OWNER COMMANDS SYNTAX*\n🔴 \u0060/send : recipient_id : message_text\u0060\n🔴 \u0060$debugmode$\u0060 - add in the beginning of message to get message json', message.from_user.id, start_message.message_id, parse_mode='markdown')
+		bot.edit_message_text(start_message.text + '\n\n*OWNER COMMANDS SYNTAX*\n🔴 \u0060/send : recipient_id : message_text\u0060\n🔴 \u0060$debug$\u0060 - add in the beginning of message to get message json', message.from_user.id, start_message.message_id, parse_mode='markdown')
 
 @bot.message_handler(commands=['send'])
 def owner_send_message(message):
@@ -52,10 +52,10 @@ def owner_send_message(message):
 
 @bot.message_handler(content_types=['audio','video','photo','document','text','location','contact','sticker'])
 def message_resender(message):
-	if type(message.text) == str and message.text.startswith('$debugmode$'):
+	if type(message.text) == str and message.text.startswith('$debug$'):
 		if rhelpers.check_is_owner(message):
 			bot.send_message(message.from_user.id, message)
-			print('[BOT] OWNER used $debugmode$')
+			print('[BOT] OWNER used $debug$')
 	elif rhelpers.get_debug_status() and not rhelpers.check_is_owner(message):
 		message_localize = '<code>[ БОТ НА ОБСЛУЖИВАНИИ ]</code>\n\n<b>ПЕРЕОТПРАВЬТЕ СООБЩЕНИЕ ЧУТЬ ПОЗЖЕ</b>' if rhelpers.get_user_language(message) == 'ru' else '<code>[ BOT IS UNDER MAINTENANCE ]</code>\n\n<b>TRY TO RESEND YOUR MESSAGE A LITTLE BIT LATER</b>'
 		bot.send_message(message.from_user.id, message_localize, parse_mode='HTML')
