@@ -70,4 +70,4 @@ def message_resender(message):
 		print('[BOT] Message from < {0} > to OWNER was successfully sent.'.format(message.from_user.id))
 
 print("[BOT] Initialized. Starting polling.")
-bot.polling(none_stop=True)
+bot.infinity_polling()
