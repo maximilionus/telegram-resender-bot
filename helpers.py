@@ -1,5 +1,6 @@
 import os
 import dotenv
+from termcolor import colored
 dotenv.load_dotenv()
 
 def get_user_language(message):
@@ -28,3 +29,7 @@ def format_user2log(message):
 	last_name = ', last:"{}"'.format(str(message.from_user.last_name)) if str(message.from_user.last_name) != 'None' else ''
 	result = '( {0}{1}{2}{3}{4} )'.format(owner_detect, user_id, username, first_name, last_name)
 	return result
+
+def log_bot():
+	result = colored('[BOT]', 'red', attrs=['reverse'])
+	return result + ' '
