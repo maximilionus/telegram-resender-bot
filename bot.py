@@ -9,7 +9,7 @@ user_id_owner = os.getenv("ID_OWNER")
 
 @bot.message_handler(commands=['start'])
 def starter_help_message(message):
-	print('[BOT] Detected /start for user < {0} >.'.format(message.from_user.id))
+	print('[BOT] Detected /start for user {}.'.format(rhelpers.format_user2log(message)))
 	if rhelpers.get_user_language(message) == 'ru':
 		start_message = bot.send_message(message.from_user.id, '*Привет* 👋\n\nДанный бот пересылает все отправленые ему сообщения сам знаешь кому. \
 Бот так-же может выполнять функцию обратной связи, так что ответы на все свои вопросы ты скорее всего получишь через него.\n\nНу вот, собственно, и все. \
@@ -55,7 +55,7 @@ def message_resender(message):
 	if type(message.text) == str and message.text.startswith('$debug$'):
 		if rhelpers.check_is_owner(message):
 			bot.send_message(message.from_user.id, message)
-			print('[BOT] OWNER used $debug$')
+			print('[BOT] {} used $debug$'.format(rhelpers.format_user2log(message)))
 	elif rhelpers.get_debug_status() and not rhelpers.check_is_owner(message):
 		message_localize = '<code>[ БОТ НА ОБСЛУЖИВАНИИ ]</code>\n\n<b>ПЕРЕОТПРАВЬТЕ СООБЩЕНИЕ ЧУТЬ ПОЗЖЕ</b>' if rhelpers.get_user_language(message) == 'ru' else '<code>[ BOT IS UNDER MAINTENANCE ]</code>\n\n<b>TRY TO RESEND YOUR MESSAGE A LITTLE BIT LATER</b>'
 		bot.send_message(message.from_user.id, message_localize, parse_mode='HTML')
@@ -67,7 +67,7 @@ def message_resender(message):
 			bot.reply_to(message, '*Ваше сообщение было успешно перенаправлено получателю*',parse_mode='markdown')
 		else:
 			bot.reply_to(message, '*Your message was successfully forwarded to recipient*', parse_mode='markdown')
-		print('[BOT] Message from < {0} > to OWNER was successfully sent.'.format(message.from_user.id))
+		print('[BOT] Message from {} to OWNER was successfully sent.'.format(rhelpers.format_user2log(message)))
 
 print("[BOT] Initialized. Starting polling.")
 bot.infinity_polling()
