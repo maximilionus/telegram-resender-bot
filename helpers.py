@@ -16,9 +16,12 @@ def check_is_owner(message):
 		return bool(0)
 
 def get_debug_status():
-	if os.getenv('BOT_DEBUG_STATUS') == '1':
-		return bool(1)
-	elif os.getenv('BOT_DEBUG_STATUS') == '0':
+	if 'BOT_DEBUG_STATUS' in os.environ:
+		if os.getenv('BOT_DEBUG_STATUS') == '1':
+			return bool(1)
+		elif os.getenv('BOT_DEBUG_STATUS') == '0':
+			return bool(0)
+	else:
 		return bool(0)
 
 def format_user2log(message):
@@ -27,9 +30,9 @@ def format_user2log(message):
 	username = ', username:"@{}"'.format(str(message.from_user.username)) if str(message.from_user.username) != 'None' else ''
 	first_name = ', first:"{}"'.format(str(message.from_user.first_name)) if str(message.from_user.first_name) != 'None' else ''
 	last_name = ', last:"{}"'.format(str(message.from_user.last_name)) if str(message.from_user.last_name) != 'None' else ''
-	result = '( {0}{1}{2}{3}{4} )'.format(owner_detect, user_id, username, first_name, last_name)
+	result = f'( {owner_detect}{user_id}{username}{first_name}{last_name} )'
 	return result
 
-def log_bot():
-	result = colored('[BOT]', 'red', attrs=['reverse'])
-	return result + ' '
+def log_bot(log_message = ''):
+	bot = colored('[BOT]', 'red', attrs=['reverse'])
+	print(f'{bot} {log_message}')
