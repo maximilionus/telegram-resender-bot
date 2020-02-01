@@ -26,7 +26,7 @@ after it\u0027s launched and you will receive a delivery confirmation. So there\
 		str_localize = '\u0060< БОТ НА ОБСЛУЖИВАНИИ >\u0060' if rhelpers.get_user_language(message) == 'ru' else '\u0060< BOT IS UNDER MAINTENANCE >\u0060'
 		start_message = bot.edit_message_text('{}\n\n'.format(str_localize) + start_message.text, message.from_user.id, start_message.message_id, parse_mode='markdown')
 	if rhelpers.check_is_owner(message):
-		bot.edit_message_text(start_message.text + '\n\n*OWNER COMMANDS SYNTAX*\n🔴 \u0060/send : recipient_id : message_text\u0060\n🔴 \u0060$debug$\u0060 - add in the beginning of message to get message json', message.from_user.id, start_message.message_id, parse_mode='markdown')
+		bot.send_message(message.from_user.id, '*OWNER COMMANDS SYNTAX*\n🔴 \u0060/send : recipient_id : message_text\u0060\n🔴 \u0060$debug$\u0060 - add in the beginning of message to get message json', parse_mode='markdown')
 
 @bot.message_handler(commands=['send'])
 def owner_send_message(message):
