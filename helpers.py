@@ -34,5 +34,10 @@ def format_user2log(message):
 	return result
 
 def log_bot(log_message = ''):
-	bot = colored('[BOT]', 'red', attrs=['reverse'])
+	bot = str()
+	if "BOT_LOGS_DISABLE_COLOR" in os.environ:
+		if os.getenv("BOT_LOGS_DISABLE_COLOR") == '1':
+			bot = '[BOT]'
+	else:
+		bot = colored('[BOT]', 'red', attrs=['reverse'])
 	print(f'{bot} {log_message}')
