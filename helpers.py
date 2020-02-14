@@ -3,6 +3,8 @@ import dotenv
 from termcolor import colored
 dotenv.load_dotenv()
 
+# ------------------------- #
+
 def get_user_language(message):
 	if (message.from_user.language_code == 'ru'):
 		return 'ru'
@@ -41,3 +43,18 @@ def log_bot(log_message = ''):
 	else:
 		bot = colored('[BOT]', 'red', attrs=['reverse'])
 	print(f'{bot} {log_message}')
+
+# ------------------------- #
+
+text = {
+	"start":{
+		"_parse": None,
+		"en":"👋\n\n>>> /help <<<"
+	},
+	"help":{
+		"_parse": "markdown",
+		"en": "*Welcome* 👋\n\nThis bot forwards all the messages sent to it to... you know who. The bot can also perform a feedback function, so you will most likely get all your questions answered through it.\n\nWell, that\u0027s it, actually. You can write a message right now and send it without any additional commands :)\n\nThe bot is almost always online, but still can sometimes go on maintenance if I suddenly decide to (update / restart / etc) it. Your message will be delivered anyway after it\u0027s launched and you will receive a delivery confirmation. So there\u0027s no need send the same message every 5 minutes :",
+		
+		"ru": "*Привет* 👋\n\nДанный бот пересылает все отправленые ему сообщения сам знаешь кому. Бот так-же может выполнять функцию обратной связи, так что ответы на все свои вопросы ты скорее всего получишь через него.\n\nНу вот, собственно, и все. Можешь прямо сейчас писать сообщение и отправлять его без каких либо дополнительных команд :)\n\nБот почти всегда онлайн, но все же может иногда уходить на \u0022профилактику\u0022 если я вдруг решу (обновить / перезапустить / etc) его. Твое сообщение в любом случае будет доставлено после его запуска и ты получишь подтверждение доставки. Так что не надо отправлять одно и то же сообщение каждые 5 минут :)",
+	},
+}
