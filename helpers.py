@@ -49,7 +49,7 @@ def log_bot(log_message = ''):
 text = {
 	"start":{
 		"_parse": None,
-		"en":"👋\n\n>>> /help <<<"
+		"en":"👋\n\n> /help <"
 	},
 	"help":{
 		"_parse": "markdown",
