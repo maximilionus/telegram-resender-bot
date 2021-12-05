@@ -1,5 +1,4 @@
-# Ignore final .env file
-.env
-
-# Ignore python cache
 __pycache__
+.env
+.venv
+.vscode
